@@ -2,7 +2,7 @@ Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
 Version:	1.2.9
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Group:		Networking
@@ -73,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/netplug
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/netplug/netplugd.conf
 %dir %{_sysconfdir}/netplug.d
-%attr(755,root,root) %{_sysconfdir}/netplug.d/netplug
+%attr(644,root,root) %{_sysconfdir}/netplug.d/netplug
 %attr(754,root,root) /etc/rc.d/init.d/netplugd
 %{_mandir}/man?/*
 
