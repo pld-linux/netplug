@@ -1,4 +1,5 @@
 Summary:	Daemon that responds to network cables being plugged in and out
+Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
 Version:	1.0
 Release:	1
@@ -10,10 +11,10 @@ Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Requires:	iproute >= 2.4.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define sysconfig /etc/sysconfig/network-scripts
+%define		sysconfig	/etc/sysconfig/network-scripts
 
 %description
-Netplug is a daemon that manages network interfaces in response to
+netplug is a daemon that manages network interfaces in response to
 link-level events such as cables being plugged in and out. When a
 cable is plugged into an interface, the netplug daemon brings that
 interface up. When the cable is unplugged, the daemon brings that
@@ -23,6 +24,18 @@ This is extremely useful for systems such as laptops, which are
 constantly being unplugged from one network and plugged into another,
 and for moving systems in a machine room from one switch to another
 without a need for manual intervention.
+
+%description -l pl
+netplug jest demonem zarz±dzaj±cym interfejsami sieciowymi w reakcji
+na zdarzenia poziomu po³±czeniowego (link-level), takie jak
+pod³±czenie/od³±czenia kabla. Przy pod³±czaniu kabla do karty
+sieciowej demon netplug podnosi dany interfejs. Przy od³±czaniu kabla
+demon ponownie wy³±cza ten interfejs.
+
+Najbardziej przydaje siê to komputerach typu laptop, które s± ci±gle
+wy³±czane z jednej sieci i w³±czane do innej oraz w komputerach
+przenoszonych w serwerowni z jednego switcha do drugiego bez potrzeby
+rêcznej interwencji.
 
 %prep
 %setup -q
