@@ -16,7 +16,7 @@ Requires(post):	diffutils
 Requires(post,postun):	fileutils
 Requires(post):	grep
 Requires(post,postun):	sed
-Requires:	iproute >= 2.4.7
+Requires:	iproute2 >= 2.4.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		sysconfig	/etc/sysconfig/network-scripts
