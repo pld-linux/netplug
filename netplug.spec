@@ -3,11 +3,17 @@ Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
 Version:	1.0
 Release:	1
-Group:		Networking
 License:	GPL
+Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
+Group:		Networking
 Source0:	%{name}-%{version}.tar.bz2
 #URL:		http://www.serpentine.com/~bos/netplug/
-Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
+Requires(post):	diffutils
+Requires(post,postun):	fileutils
+Requires(post):	grep
+Requires(post,postun):	sed
 Requires:	iproute >= 2.4.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -45,23 +51,24 @@ rêcznej interwencji.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install prefix=$RPM_BUILD_ROOT \
-	initdir=$RPM_BUILD_ROOT/%{_initrddir} \
-	mandir=$RPM_BUILD_ROOT/%{_mandir}
+
+%{__make} install \
+	prefix=$RPM_BUILD_ROOT \
+	initdir=$RPM_BUILD_ROOT%{_initrddir} \
+	mandir=$RPM_BUILD_ROOT%{_mandir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-/sbin/netplugd
-%config %{_sysconfdir}/netplug/netplugd.conf
-%{_sysconfdir}/netplug.d
-/etc/rc.d/init.d/netplugd
-%docdir %{_mandir}/*
-%{_mandir}/*/*
-
 %doc COPYING README TODO
+%attr(755,root,root) /sbin/netplugd
+%dir %{_sysconfdir}/netplug
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/netplug/netplugd.conf
+%{_sysconfdir}/netplug.d
+%attr(754,root,root) /etc/rc.d/init.d/netplugd
+%{_mandir}/*/*
 
 %post
 /sbin/chkconfig --add netplugd
@@ -86,9 +93,12 @@ for cfg in %{sysconfig}/ifcfg-eth*; do
 done
 
 %preun
-/sbin/chkconfig --del netplugd
+if [ "$1" = "0" ]; then
+	/sbin/chkconfig --del netplugd
+fi
 
 %postun
+if [ "$1" = "0" ]; then
 for precfg in %{sysconfig}/*.pre-netplug; do
 	if [ ! -f "$precfg" ]; then
 		continue
@@ -104,3 +114,4 @@ for precfg in %{sysconfig}/*.pre-netplug; do
 	fi
 	rm "$cfg.new.$$" "$cfg.pre-netplug"
 done
+fi
