@@ -1,0 +1,14 @@
+--- netplug-1.2/Makefile.orig	Mon Sep  8 23:27:40 2003
++++ netplug-1.2/Makefile	Wed Oct 15 12:59:16 2003
+@@ -9,8 +9,9 @@
+ 
+ install_opts := -o root -g root
+ 
+-CFLAGS += -Wall -Werror -std=gnu99 -g -DNP_ETC_DIR='"$(etcdir)"' \
+-	-DNP_SCRIPT_DIR='"$(scriptdir)"' -ggdb3 -O -DNP_VERSION='"$(version)"'
++OPT = -g -ggdb3 -O
++CFLAGS += $(OPT) -Wall -Werror -std=gnu99 -DNP_ETC_DIR='"$(etcdir)"' \
++	-DNP_SCRIPT_DIR='"$(scriptdir)"' -DNP_VERSION='"$(version)"'
+ 
+ netplugd: config.o netlink.o lib.o if_info.o main.o
+ 	$(CC) -o $@ $^
