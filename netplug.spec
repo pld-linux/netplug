@@ -1,13 +1,13 @@
 Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
-Version:	1.2
+Version:	1.2.3
 Release:	1
 License:	GPL
 Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Group:		Networking
 Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
-# Source0-md5:	494cc109f74c7f25129b1f7492b6a769
+# Source0-md5:	1c8aac94c87c54ca48cd65a3b2e75d84
 Patch0:		%{name}-opt.patch
 URL:		http://www.red-bean.com/~bos/
 PreReq:		rc-scripts
@@ -79,45 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add netplugd
 
-for cfg in %{sysconfig}/ifcfg-eth*; do
-	if echo "$cfg" | grep -q pre-netplug; then
-		continue
-	fi
-	if [ -f "$cfg.pre-netplug" ]; then
-		continue
-	fi
-	sed -e 's/^ONBOOT=yes/ONBOOT=no/' "$cfg" > "$cfg.new.$$"
-	if cmp -s "$cfg" "$cfg.new.$$"; then
-		true
-	else
-		cp "$cfg" "$cfg.pre-netplug"
-		cp "$cfg.new.$$" "$cfg"
-		ifname=`echo "$cfg" | sed 's!^.*/ifcfg-\(.*\)$!\1!'`
-		echo "Updated $ifname to be managed by netplug"
-	fi
-	rm "$cfg.new.$$"
-done
-
 %preun
 if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del netplugd
-fi
-
-%postun
-if [ "$1" = "0" ]; then
-for precfg in %{sysconfig}/*.pre-netplug; do
-	if [ ! -f "$precfg" ]; then
-		continue
-	fi
-	cfg=`echo "$precfg" | sed -e 's!\.pre-netplug$!!'`
-	sed -e 's/^ONBOOT=no/ONBOOT=yes/' "$cfg" > "$cfg.new.$$"
-	if cmp -s "$cfg" "$cfg.new.$$"; then
-		true
-	else
-		cp "$cfg.new.$$" "$cfg"
-		ifname=`echo "$cfg" | sed -e 's!^.*/ifcfg-\(.*\)$!\1!'`
-		echo "Restored $ifname to be brought up at boot time"
-	fi
-	rm "$cfg.new.$$" "$cfg.pre-netplug"
-done
 fi
