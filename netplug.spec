@@ -1,18 +1,16 @@
-%define version 1.0
-%define release 1
-%define sysconfig /etc/sysconfig/network-scripts
-
 Summary:	Daemon that responds to network cables being plugged in and out
 Name:		netplug
-Version:	%{version}
-Release:	%{release}
-License:	GPL
+Version:	1.0
+Release:	1
 Group:		Networking
-URL:		http://www.serpentine.com/~bos/netplug
-Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
+License:	GPL
 Source0:	%{name}-%{version}.tar.bz2
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+#URL:		http://www.serpentine.com/~bos/netplug/
+Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Requires:	iproute >= 2.4.7
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define sysconfig /etc/sysconfig/network-scripts
 
 %description
 Netplug is a daemon that manages network interfaces in response to
@@ -56,22 +54,22 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add netplugd
 
 for cfg in %{sysconfig}/ifcfg-eth*; do
-    if echo "$cfg" | grep -q pre-netplug; then
-	continue
-    fi
-    if [ -f "$cfg.pre-netplug" ]; then
-	continue
-    fi
-    sed -e 's/^ONBOOT=yes/ONBOOT=no/' "$cfg" > "$cfg.new.$$"
-    if cmp -s "$cfg" "$cfg.new.$$"; then
-	true
-    else
-	cp "$cfg" "$cfg.pre-netplug"
-	cp "$cfg.new.$$" "$cfg"
-	ifname=`echo "$cfg" | sed 's!^.*/ifcfg-\(.*\)$!\1!'`
-	echo "Updated $ifname to be managed by netplug"
-    fi
-    rm "$cfg.new.$$"
+	if echo "$cfg" | grep -q pre-netplug; then
+		continue
+	fi
+	if [ -f "$cfg.pre-netplug" ]; then
+		continue
+	fi
+	sed -e 's/^ONBOOT=yes/ONBOOT=no/' "$cfg" > "$cfg.new.$$"
+	if cmp -s "$cfg" "$cfg.new.$$"; then
+		true
+	else
+		cp "$cfg" "$cfg.pre-netplug"
+		cp "$cfg.new.$$" "$cfg"
+		ifname=`echo "$cfg" | sed 's!^.*/ifcfg-\(.*\)$!\1!'`
+		echo "Updated $ifname to be managed by netplug"
+	fi
+	rm "$cfg.new.$$"
 done
 
 %preun
@@ -79,17 +77,17 @@ done
 
 %postun
 for precfg in %{sysconfig}/*.pre-netplug; do
-    if [ ! -f "$precfg" ]; then
-	continue
-    fi
-    cfg=`echo "$precfg" | sed -e 's!\.pre-netplug$!!'`
-    sed -e 's/^ONBOOT=no/ONBOOT=yes/' "$cfg" > "$cfg.new.$$"
-    if cmp -s "$cfg" "$cfg.new.$$"; then
-	true
-    else
-	cp "$cfg.new.$$" "$cfg"
-        ifname=`echo "$cfg" | sed -e 's!^.*/ifcfg-\(.*\)$!\1!'`
-	echo "Restored $ifname to be brought up at boot time"
-    fi
-    rm "$cfg.new.$$" "$cfg.pre-netplug"
+	if [ ! -f "$precfg" ]; then
+		continue
+	fi
+	cfg=`echo "$precfg" | sed -e 's!\.pre-netplug$!!'`
+	sed -e 's/^ONBOOT=no/ONBOOT=yes/' "$cfg" > "$cfg.new.$$"
+	if cmp -s "$cfg" "$cfg.new.$$"; then
+		true
+	else
+		cp "$cfg.new.$$" "$cfg"
+		ifname=`echo "$cfg" | sed -e 's!^.*/ifcfg-\(.*\)$!\1!'`
+		echo "Restored $ifname to be brought up at boot time"
+	fi
+	rm "$cfg.new.$$" "$cfg.pre-netplug"
 done
