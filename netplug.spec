@@ -1,13 +1,15 @@
 Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
-Version:	1.0
+Version:	1.2
 Release:	1
 License:	GPL
 Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Group:		Networking
-Source0:	%{name}-%{version}.tar.bz2
-#URL:		http://www.serpentine.com/~bos/netplug/
+Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
+# Source0-md5:	494cc109f74c7f25129b1f7492b6a769
+Patch0:		%{name}-opt.patch
+URL:		http://www.red-bean.com/~bos/
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	diffutils
@@ -45,14 +47,18 @@ rêcznej interwencji.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
-%{__make}
+%{__make} \
+	CC="%{__cc}" \
+	OPT="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
+	install_opts= \
 	prefix=$RPM_BUILD_ROOT \
 	initdir=$RPM_BUILD_ROOT%{_initrddir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir}
@@ -62,13 +68,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING README TODO
+%doc README TODO
 %attr(755,root,root) /sbin/netplugd
 %dir %{_sysconfdir}/netplug
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/netplug/netplugd.conf
 %{_sysconfdir}/netplug.d
 %attr(754,root,root) /etc/rc.d/init.d/netplugd
-%{_mandir}/*/*
+%{_mandir}/man?/*
 
 %post
 /sbin/chkconfig --add netplugd
