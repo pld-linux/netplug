@@ -72,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/netplugd
 %dir %{_sysconfdir}/netplug
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/netplug/netplugd.conf
+%dir %{_sysconfdir}/netplug.d
 %attr(755,root,root) %{_sysconfdir}/netplug.d/netplug
 %attr(754,root,root) /etc/rc.d/init.d/netplugd
 %{_mandir}/man?/*
