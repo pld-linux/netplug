@@ -10,13 +10,13 @@ Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
 # Source0-md5:	3bc8062d8033e3f897b015f2889ce5a9
 Patch0:		%{name}-opt.patch
 URL:		http://www.red-bean.com/~bos/
-PreReq:		rc-scripts
-Requires(post,preun):	/sbin/chkconfig
 Requires(post):	diffutils
-Requires(post,postun):	fileutils
 Requires(post):	grep
+Requires(post,postun):	fileutils
 Requires(post,postun):	sed
+Requires(post,preun):	/sbin/chkconfig
 Requires:	iproute2 >= 2.4.7
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		sysconfig	/etc/sysconfig/network-scripts
@@ -71,7 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog NEWS README TODO
 %attr(755,root,root) /sbin/netplugd
 %dir %{_sysconfdir}/netplug
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/netplug/netplugd.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/netplug/netplugd.conf
 %dir %{_sysconfdir}/netplug.d
 %attr(755,root,root) %{_sysconfdir}/netplug.d/netplug
 %attr(754,root,root) /etc/rc.d/init.d/netplugd
