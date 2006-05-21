@@ -2,9 +2,8 @@ Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
 Version:	1.2.9
-Release:	2
+Release:	3
 License:	GPL
-Vendor:		Key Research, Inc. <http://www.keyresearch.com/>
 Group:		Networking
 Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
 # Source0-md5:	3bc8062d8033e3f897b015f2889ce5a9
