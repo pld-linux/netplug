@@ -19,6 +19,7 @@ Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		sysconfig	/etc/sysconfig/network-scripts
+%define		_sbindir	/sbin
 
 %description
 netplug is a daemon that manages network interfaces in response to
@@ -68,7 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS README TODO
-%attr(755,root,root) /sbin/netplugd
+%attr(755,root,root) %{_sbindir}/netplugd
 %dir %{_sysconfdir}/netplug
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/netplug/netplugd.conf
 %dir %{_sysconfdir}/netplug.d
