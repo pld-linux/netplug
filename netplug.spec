@@ -1,3 +1,5 @@
+# TODO
+# - pld initscript
 Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
 Name:		netplug
@@ -9,10 +11,6 @@ Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
 # Source0-md5:	3bc8062d8033e3f897b015f2889ce5a9
 Patch0:		%{name}-opt.patch
 URL:		http://www.red-bean.com/~bos/
-Requires(post):	diffutils
-Requires(post):	grep
-Requires(post,postun):	fileutils
-Requires(post,postun):	sed
 Requires(post,preun):	/sbin/chkconfig
 Requires:	iproute2 >= 2.4.7
 Requires:	rc-scripts
