@@ -1,7 +1,7 @@
 # TODO
 # - pld initscript
 Summary:	Daemon that responds to network cables being plugged in and out
-Summary(pl):	Demon reaguj±cy na pod³±czenia/od³±czenie kabla ethernetowego
+Summary(pl.UTF-8):   Demon reagujÄ…cy na podÅ‚Ä…czenia/odÅ‚Ä…czenie kabla ethernetowego
 Name:		netplug
 Version:	1.2.9
 Release:	3
@@ -31,17 +31,17 @@ constantly being unplugged from one network and plugged into another,
 and for moving systems in a machine room from one switch to another
 without a need for manual intervention.
 
-%description -l pl
-netplug jest demonem zarz±dzaj±cym interfejsami sieciowymi w reakcji
-na zdarzenia poziomu po³±czeniowego (link-level), takie jak
-pod³±czenie/od³±czenia kabla. Przy pod³±czaniu kabla do karty
-sieciowej demon netplug podnosi dany interfejs. Przy od³±czaniu kabla
-demon ponownie wy³±cza ten interfejs.
+%description -l pl.UTF-8
+netplug jest demonem zarzÄ…dzajÄ…cym interfejsami sieciowymi w reakcji
+na zdarzenia poziomu poÅ‚Ä…czeniowego (link-level), takie jak
+podÅ‚Ä…czenie/odÅ‚Ä…czenia kabla. Przy podÅ‚Ä…czaniu kabla do karty
+sieciowej demon netplug podnosi dany interfejs. Przy odÅ‚Ä…czaniu kabla
+demon ponownie wyÅ‚Ä…cza ten interfejs.
 
-Najbardziej przydaje siê to komputerach typu laptop, które s± ci±gle
-wy³±czane z jednej sieci i w³±czane do innej oraz w komputerach
+Najbardziej przydaje siÄ™ to komputerach typu laptop, ktÃ³re sÄ… ciÄ…gle
+wyÅ‚Ä…czane z jednej sieci i wÅ‚Ä…czane do innej oraz w komputerach
 przenoszonych w serwerowni z jednego switcha do drugiego bez potrzeby
-rêcznej interwencji.
+rÄ™cznej interwencji.
 
 %prep
 %setup -q
