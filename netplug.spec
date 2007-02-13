@@ -1,7 +1,7 @@
 # TODO
 # - pld initscript
 Summary:	Daemon that responds to network cables being plugged in and out
-Summary(pl.UTF-8):   Demon reagujący na podłączenia/odłączenie kabla ethernetowego
+Summary(pl.UTF-8):	Demon reagujący na podłączenia/odłączenie kabla ethernetowego
 Name:		netplug
 Version:	1.2.9
 Release:	3
