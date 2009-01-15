@@ -3,12 +3,12 @@
 Summary:	Daemon that responds to network cables being plugged in and out
 Summary(pl.UTF-8):	Demon reagujący na podłączenia/odłączenie kabla ethernetowego
 Name:		netplug
-Version:	1.2.9
-Release:	3
+Version:	1.2.9.1
+Release:	1
 License:	GPL
 Group:		Networking
 Source0:	http://www.red-bean.com/~bos/netplug/%{name}-%{version}.tar.bz2
-# Source0-md5:	3bc8062d8033e3f897b015f2889ce5a9
+# Source0-md5:	1e439dc3fc5a52de0b85467efbd25a57
 Patch0:		%{name}-opt.patch
 URL:		http://www.red-bean.com/~bos/
 Requires(post,preun):	/sbin/chkconfig
