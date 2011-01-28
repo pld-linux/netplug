@@ -64,6 +64,14 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+/sbin/chkconfig --add netplugd
+
+%preun
+if [ "$1" = "0" ]; then
+	/sbin/chkconfig --del netplugd
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS README TODO
@@ -74,11 +82,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sysconfdir}/netplug.d/netplug
 %attr(754,root,root) /etc/rc.d/init.d/netplugd
 %{_mandir}/man?/*
-
-%post
-/sbin/chkconfig --add netplugd
-
-%preun
-if [ "$1" = "0" ]; then
-	/sbin/chkconfig --del netplugd
-fi
